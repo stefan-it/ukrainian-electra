@@ -142,7 +142,7 @@ All models are licensed under [MIT](LICENSE).
 
 For questions about our Ukrainian ELECTRA model just open an issue
 [in the DBMDZ BERT repo](https://github.com/dbmdz/berts/issues/new) or in
-[this repo](https://github.com/stefan-it/uktrainian-electra/issues/new) 🤗
+[this repo](https://github.com/stefan-it/ukrainian-electra/issues/new) 🤗
 
 # Acknowledgments
 
