@@ -1,5 +1,7 @@
 # 🇺🇦 Ukrainian ELECTRA model
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4267880.svg)](https://doi.org/10.5281/zenodo.4267880)
+
 In this repository we monitor all experiments for our trained [DBMDZ model](https://github.com/dbmdz/berts)
 for Ukrainian. We use the awesome 🤗 Transformers library to fine-tune models.
 
@@ -7,6 +9,7 @@ Made with 🤗, 🥨 and ❤️ from Munich.
 
 # Changelog
 
+* 11.11.2020: Add DOI/Zenodo information, including citation section.
 * 10.11.2020: Initial version and public release of Ukrainian ELECTRA model.
 
 # Training
@@ -143,6 +146,23 @@ All models are licensed under [MIT](LICENSE).
 For questions about our Ukrainian ELECTRA model just open an issue
 [in the DBMDZ BERT repo](https://github.com/dbmdz/berts/issues/new) or in
 [this repo](https://github.com/stefan-it/ukrainian-electra/issues/new) 🤗
+
+# Citation
+
+You can use the following BibTeX entry for citation:
+
+```bibtex
+@software{stefan_schweter_2020_4267880,
+  author       = {Stefan Schweter},
+  title        = {Ukrainian ELECTRA model},
+  month        = nov,
+  year         = 2020,
+  publisher    = {Zenodo},
+  version      = {1.0.0},
+  doi          = {10.5281/zenodo.4267880},
+  url          = {https://doi.org/10.5281/zenodo.4267880}
+}
+```
 
 # Acknowledgments
 
