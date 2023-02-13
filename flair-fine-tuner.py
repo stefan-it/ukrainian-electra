@@ -44,9 +44,9 @@ def run_experiment(seed, batch_size, epoch, learning_rate, json_config):
         columns = {0: "text", 1: "ner"}
         corpus = ColumnCorpus("./data/stanza-lang-uk/Ukrainian-languk",
             columns,
-            test_file="train.bio",
-            dev_file="dev.bio",
             train_file="train.bio",
+            dev_file="dev.bio",
+            test_file="test.bio",
             column_delimiter=" ",
             encoding="utf-8"
         )
