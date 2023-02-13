@@ -7,8 +7,7 @@ import torch
 
 from typing import List
 
-from flair.data import MultiCorpus
-from flair.datasets import NER_UKRAINIAN, UD_UKRAINIAN
+from flair.datasets import ColumnCorpus, UD_UKRAINIAN
 from flair.embeddings import (
     TokenEmbeddings,
     StackedEmbeddings,
@@ -42,7 +41,15 @@ def run_experiment(seed, batch_size, epoch, learning_rate, json_config):
     tag_type = None
 
     if dataset == "ner":
-        corpus = NER_UKRAINIAN()
+        columns = {0: "text", 1: "ner"}
+        corpus = ColumnCorpus("./data/stanza-lang-uk/Ukrainian-languk",
+            columns,
+            test_file="train.bio",
+            dev_file="dev.bio",
+            train_file="train.bio",
+            column_delimiter=" ",
+            encoding="utf-8"
+        )
         tag_type = "ner"
     elif dataset == "ud":
         corpus = UD_UKRAINIAN()
