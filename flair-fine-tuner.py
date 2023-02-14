@@ -51,7 +51,7 @@ def run_experiment(seed, batch_size, epoch, learning_rate, json_config):
             encoding="utf-8"
         )
         tag_type = "ner"
-    elif dataset == "ud":
+    elif dataset == "pos":
         corpus = UD_UKRAINIAN()
         tag_type = "upos"
 
