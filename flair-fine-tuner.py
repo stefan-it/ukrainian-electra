@@ -55,7 +55,7 @@ def run_experiment(seed, batch_size, epoch, learning_rate, json_config):
         corpus = UD_UKRAINIAN()
         tag_type = "upos"
 
-    label_dictionary = corpus.make_label_dictionary(label_type="ner")
+    label_dictionary = corpus.make_label_dictionary(label_type=tag_type)
     
     print("Label Dictionary:", label_dictionary.get_items())
 
