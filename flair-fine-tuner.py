@@ -37,6 +37,7 @@ def run_experiment(seed, batch_size, epoch, learning_rate, json_config):
     print("FLERT Context:", context_size)
     print("Layers:", layers)
     print("Use CRF:", use_crf)
+    print("Tarin with dev:", train_with_dev)
 
     corpus = None
     tag_type = None
