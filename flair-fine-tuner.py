@@ -26,6 +26,7 @@ def run_experiment(seed, batch_size, epoch, learning_rate, json_config):
     layers = json_config["layers"] if "layers" in json_config else "-1"
     use_crf = json_config["use_crf"] if "use_crf" in json_config else False
     dataset = json_config["dataset"]
+    train_with_dev = json_config["train_with_dev"] if "train_with_dev" in json_config else False
 
     # Set seed for reproducibility
     set_seed(seed)
@@ -84,8 +85,13 @@ def run_experiment(seed, batch_size, epoch, learning_rate, json_config):
     # Trainer
     trainer: ModelTrainer = ModelTrainer(tagger, corpus)
 
+    model_prefix = "uk-fine-tuned"
+
+    if train_with_dev:
+        model_prefix += "-with_dev-"
+
     trainer.fine_tune(
-        f"uk-fine-tuned-{hf_model}-bs{batch_size}-ws{context_size}-e{epoch}-lr{learning_rate}-layers{layers}-crf{use_crf}-{seed}",
+        f"{model_prefix}-{hf_model}-bs{batch_size}-ws{context_size}-e{epoch}-lr{learning_rate}-layers{layers}-crf{use_crf}-{seed}",
         learning_rate=learning_rate,
         mini_batch_size=batch_size,
         max_epochs=epoch,
@@ -94,6 +100,7 @@ def run_experiment(seed, batch_size, epoch, learning_rate, json_config):
         weight_decay=0.,
         use_final_model_for_eval=False,
         main_evaluation_metric=main_evaluation_metric,
+        train_with_dev=train_with_dev,
     )
     
     # Finally, print model card for information
