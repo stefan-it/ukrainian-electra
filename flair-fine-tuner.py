@@ -89,7 +89,7 @@ def run_experiment(seed, batch_size, epoch, learning_rate, json_config):
     model_prefix = "uk-fine-tuned"
 
     if train_with_dev:
-        model_prefix += "-with_dev-"
+        model_prefix += "-with_dev"
 
     trainer.fine_tune(
         f"{model_prefix}-{hf_model}-bs{batch_size}-ws{context_size}-e{epoch}-lr{learning_rate}-layers{layers}-crf{use_crf}-{seed}",
