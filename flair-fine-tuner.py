@@ -47,7 +47,7 @@ def run_experiment(seed, batch_size, epoch, learning_rate, json_config):
             columns,
             train_file=f"{seed}_train.txt",
             dev_file=f"{seed}_dev.txt",
-            test_file=f"test.bio",
+            test_file=f"test.iob",
             column_delimiter=" ",
             encoding="utf-8"
         )
