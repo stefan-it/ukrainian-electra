@@ -46,7 +46,7 @@ def run_experiment(seed, batch_size, epoch, learning_rate, json_config):
         corpus = ColumnCorpus("./ner_experiments",
             columns,
             train_file=f"{seed}_train.txt",
-            dev_file=f"{seed}_dev.bio",
+            dev_file=f"{seed}_dev.txt",
             test_file=f"test.bio",
             column_delimiter=" ",
             encoding="utf-8"
