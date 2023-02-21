@@ -43,11 +43,11 @@ def run_experiment(seed, batch_size, epoch, learning_rate, json_config):
 
     if dataset == "ner":
         columns = {0: "text", 1: "ner"}
-        corpus = ColumnCorpus("./data/stanza-lang-uk/Ukrainian-languk",
+        corpus = ColumnCorpus("./ner_experiments",
             columns,
-            train_file="train.bio",
-            dev_file="dev.bio",
-            test_file="test.bio",
+            train_file=f"{seed}_train.txt",
+            dev_file=f"{seed}_dev.bio",
+            test_file=f"test.bio",
             column_delimiter=" ",
             encoding="utf-8"
         )
