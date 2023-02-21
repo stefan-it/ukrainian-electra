@@ -39,6 +39,7 @@ def run_experiment(seed, batch_size, epoch, learning_rate, json_config):
 
     corpus = None
     tag_type = None
+    main_evaluation_metric = None
 
     if dataset == "ner":
         columns = {0: "text", 1: "ner"}
@@ -51,9 +52,11 @@ def run_experiment(seed, batch_size, epoch, learning_rate, json_config):
             encoding="utf-8"
         )
         tag_type = "ner"
+        main_evaluation_metric = ("micro avg", "f1-score")
     elif dataset == "pos":
         corpus = UD_UKRAINIAN()
         tag_type = "upos"
+        main_evaluation_metric = ("micro avg", "accuracy")
 
     label_dictionary = corpus.make_label_dictionary(label_type=tag_type)
     
@@ -90,6 +93,7 @@ def run_experiment(seed, batch_size, epoch, learning_rate, json_config):
         embeddings_storage_mode='none',
         weight_decay=0.,
         use_final_model_for_eval=False,
+        main_evaluation_metric=main_evaluation_metric,
     )
     
     # Finally, print model card for information
