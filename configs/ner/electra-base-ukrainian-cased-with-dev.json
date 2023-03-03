@@ -1,6 +1,6 @@
 {
     "seeds": [1,2,3,4,5],
-    "batch_sizes": [16],
+    "batch_sizes": [8],
     "hf_model": "dbmdz/electra-base-ukrainian-cased-discriminator",
     "dataset": "ner",
     "context_size": 0,
