@@ -2,13 +2,15 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4267880.svg)](https://doi.org/10.5281/zenodo.4267880)
 
-In this repository we monitor all experiments for our trained [DBMDZ model](https://github.com/dbmdz/berts)
-for Ukrainian. We use the awesome 🤗 Transformers library to fine-tune models.
+In this repository we monitor all experiments for our trained ELECTRA model
+for Ukrainian.
 
 Made with 🤗, 🥨 and ❤️ from Munich.
 
 # Changelog
 
+* 06.03.2023: Model is now located under `lang-uk` organization on the Hugging Face
+              [model hub page](https://huggingface.co/lang-uk). New evaluation results using Flair library are added.
 * 11.11.2020: Add DOI/Zenodo information, including citation section.
 * 10.11.2020: Initial version and public release of Ukrainian ELECTRA model.
 
@@ -37,14 +39,13 @@ size of 128. We pretty much following the ELECTRA training procedure as used for
 
 # Experiments
 
-We use the awesome 🤗 Transformers library for all fine-tuning experiments.
+We use latest Flair version (release 0.12) for performing experiments on NER and PoS Tagging
+downstream tasks. Older experiments can be found under [this](https://github.com/stefan-it/ukrainian-electra/tree/1.0.0)
+tag.
 
-Please star and watch [Transformers](https://github.com/huggingface/transformers) on GitHub!
-
-All JSON-based configuration files for our experiments can be found in the
-[configuration](https://github.com/stefan-it/ukrainian-electra/tree/main/configs) folder
-in this repository. To replicate the results, just clone the latest version of Transformers, `cd`
-into the `examples/token-classification` folder and run `python3 run_ner_old.py <configuration.json>`.
+The script `flair-fine-tuner.py` is used to perform a basic hyper-parameter search. The scripts
+expects a json-based configuration file. Examples can be found in the `./configs/ner` and `./configs/pos`
+folders of this repository.
 
 ## PoS Tagging
 
@@ -58,79 +59,70 @@ Description:
 
 Details:
 
-* [Ukrainian-IU Repository](https://github.com/UniversalDependencies/UD_Ukrainian-IU)
-* Commit `758bdd3`
+We use the [`UD_UKRAINIAN`](https://github.com/flairNLP/flair/pull/3069) dataset and perform basic
+hyper-parameter search.
 
-For a better reproducibility, the `download_prepare_data_ud.sh` shell script can be used to download and
-preprocessing the data.
-
-Results (Development set)
+Results (Development set, best hyper-param config):
 
 | Model                          | Run 1 | Run 2 | Run 3 | Run 4 | Run 5 | Avg.
 | ------------------------------ | ----- | ----- | ----- | ----- | ----- | -------------- |
-| bert-base-multilingual-cased   | 98.12 | 98.03 | 98.04 | 98.08 | 98.17 | 98.09 ± 0.05
-| bert-base-multilingual-uncased | 97.93 | 98.01 | 97.90 | 97.87 | 98.00 | 97.94 ± 0.05
-| xlm-roberta-base               | 98.54 | 98.63 | 98.59 | 98.54 | 98.51 | 98.56 ± 0.04
-| Ukrainian ELECTRA (1M)         | 98.78 | 98.59 | 98.75 | 98.68 | 98.65 | **98.69** ± 0.07
+| bert-base-multilingual-cased   | 98.03 | 98.11 | 98.18 | 98.02 | 97.95 | 98.06 ± 0.09
+| xlm-roberta-base               | 98.57 | 98.47 | 98.49 | 98.40 | 98.43 | 98.47 ± 0.06
+| Ukrainian ELECTRA (1M)         | 98.57 | 98.64 | 98.60 | 98.56 | 98.62 | **98.60** ± 0.03
 
-Results (Test set)
+Results (Test set, best hyper-param config on Development set):
 
 | Model                          | Run 1 | Run 2 | Run 3 | Run 4 | Run 5 | Avg.
 | ------------------------------ | ----- | ----- | ----- | ----- | ----- | -------------- |
-| bert-base-multilingual-cased   | 97.96 | 97.98 | 97.88 | 97.90 | 97.99 | 97.94 ± 0.04
-| bert-base-multilingual-uncased | 97.89 | 97.69 | 97.73 | 97.87 | 97.77 | 97.79 ± 0.08
-| xlm-roberta-base               | 98.51 | 98.48 | 98.48 | 98.41 | 98.51 | 98.48 ± 0.04
-| Ukrainian ELECTRA (1M)         | 98.70 | 98.61 | 98.66 | 98.50 | 98.73 | **98.64** ± 0.08
+| bert-base-multilingual-cased   | 97.90 | 97.89 | 97.98 | 97.84 | 97.94 | 97.91 ± 0.05
+| xlm-roberta-base               | 98.33 | 98.51 | 98.43 | 98.41 | 98.43 | 98.42 ± 0.06
+| Ukrainian ELECTRA (1M)         | 98.63 | 98.55 | 98.53 | 98.50 | 98.59 | **98.56** ± 0.05
 
 ## NER
 
-For NER we mainly use the data provided by `lang-uk`'s great `ner-uk` annotations, that can be found in
-[this](https://github.com/lang-uk/ner-uk) repository. The annotations are in BRAT-compatible format, so
-we use the `stanza-lang-uk` conversion tool from [Andrew Garkavyi's](https://github.com/gawy) awesome
-[repository](https://github.com/gawy/stanza-lang-uk). This tool mainly converts the `ner-uk` data into
-IOB-compatible tagging scheme incl. nice training, development and test splits.
+We use the train split (`train.iob`) from [this `lang-uk` repository](https://github.com/lang-uk/flair-ner/tree/main/fixed-split)
+and create 5 random splits train and development splits. We perform hyper-parameter search
+on these 5 splits and select the best configuration (based on F1-Score on development set).
+In the final step we use the best hyper-parameter configuration, train 5 models with
+development data and evaluate them on the test split (`test.iob`) from the mentioned `lang-uk` repo.
 
-Just use the `download_prepare_data_ner.sh` script to reproduce the preprocessing steps.
+The script `create_random_split.py` was used to create 5 random splits and all created data can be found
+in the `./ner_experiments` folder in this repo.
 
-Results (Development set)
-
-| Model                          | Run 1 | Run 2 | Run 3 | Run 4 | Run 5 | Avg.
-| ------------------------------ | ----- | ----- | ----- | ----- | ----- | -------------- |
-| bert-base-multilingual-cased   | 86.07 | 86.23 | 85.83 | 85.29 | 85.86 | 85.86 ± 0.32
-| bert-base-multilingual-uncased | 78.86 | 77.56 | 79.11 | 79.18 | 79.93 | 78.93 ± 0.77
-| xlm-roberta-base               | 88.32 | 85.31 | 87.15 | 86.37 | 86.75 | 86.78 ± 0.98
-| Ukrainian ELECTRA (1M)         | 88.01 | 87.63 | 88.29 | 87.24 | 88.63 | **87.96** ± 0.49
-
-Results (Test set)
+Results (Development set, best hyper-param config):
 
 | Model                          | Run 1 | Run 2 | Run 3 | Run 4 | Run 5 | Avg.
 | ------------------------------ | ----- | ----- | ----- | ----- | ----- | -------------- |
-| bert-base-multilingual-cased   | 84.72 | 84.99 | 85.49 | 85.69 | 85.40 | 85.26 ± 0.35
-| bert-base-multilingual-uncased | 75.50 | 74.02 | 73.64 | 72.42 | 71.86 | 73.49 ± 1.28
-| xlm-roberta-base               | 87.31 | 85.93 | 89.39 | 85.40 | 85.71 | 86.75 ± 1.47
-| Ukrainian ELECTRA (1M)         | 87.38 | 89.32 | 87.61 | 86.98 | 88.72 | **88.00** ± 0.88
+| bert-base-multilingual-cased   | 90.55 | 89.89 | 90.16 | 90.84 | 90.81 | 90.45 ± 0.42
+| xlm-roberta-base               | 92.25 | 91.99 | 91.72 | 90.54 | 91.35 | 91.57 ± 0.67
+| Ukrainian ELECTRA (1M)         | 94.17 | 92.13 | 92.74 | 91.45 | 92.23 | **92.54** ± 1.02
 
-Notice: Maybe accent stripping and lowercasing the input is not a good idea when using NER tasks
-for Ukrainian with an uncased model (like uncased mBERT)!
+Results (Test set, best hyper-param config on Development set incl. development data):
+
+| Model                          | Run 1 | Run 2 | Run 3 | Run 4 | Run 5 | Avg.
+| ------------------------------ | ----- | ----- | ----- | ----- | ----- | -------------- |
+| bert-base-multilingual-cased   | 84.20 | 85.61 | 85.11 | 85.17 | 83.90 | 84.80 ± 0.72
+| xlm-roberta-base               | 87.85 | 87.39 | 87.31 | 88.15 | 86.19 | 87.38 ± 0.75
+| Ukrainian ELECTRA (1M)         | 88.16 | 87.96 | 88.39 | 88.14 | 87.68 | **88.07** ± 0.26
 
 # Model usage
 
-The Ukrainian ELECTRA model can be used from the [DBMDZ](https://github.com/dbmdz) Hugging Face [model hub page](https://huggingface.co/dbmdz).
+The Ukrainian ELECTRA model can be used from the [lang-uk](https://github.com/lang-uk) Hugging Face [model hub page](https://huggingface.co/lang-uk).
 
 As ELECTRA is trainined with an generator and discriminator model, both models are available. The generator model is usually used for masked
 language modeling, whereas the discriminator model is used for fine-tuning on downstream tasks like token or sequence classification.
 
 The following model names can be used:
 
-* Ukrainian ELECTRA (discriminator): `dbmdz/electra-base-ukrainian-cased-discriminator` - [model hub page](https://huggingface.co/dbmdz/electra-base-ukrainian-cased-discriminator)
-* Ukrainian ELECTRA (generator): `dbmdz/electra-base-ukrainian-cased-generator` - [model hub page](https://huggingface.co/dbmdz/electra-base-ukrainian-cased-generator)
+* Ukrainian ELECTRA (discriminator): `lang-uk/electra-base-ukrainian-cased-discriminator` - [model hub page](https://huggingface.co/lang-uk/electra-base-ukrainian-cased-discriminator)
+* Ukrainian ELECTRA (generator): `lang-uk/electra-base-ukrainian-cased-generator` - [model hub page](https://huggingface.co/lang-uk/electra-base-ukrainian-cased-generator)
 
 Example usage with 🤗 Transformers:
 
 ```python
 from transformers import AutoModel, AutoTokenizer
 
-model_name = "dbmdz/electra-base-ukrainian-cased-discriminator"
+model_name = "lang-uk/electra-base-ukrainian-cased-generator"
 
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
@@ -143,8 +135,7 @@ All models are licensed under [MIT](LICENSE).
 
 # Contact (Bugs, Feedback, Contribution and more)
 
-For questions about our Ukrainian ELECTRA model just open an issue
-[in the DBMDZ BERT repo](https://github.com/dbmdz/berts/issues/new) or in
+For questions about our Ukrainian ELECTRA model just open an issue in
 [this repo](https://github.com/stefan-it/ukrainian-electra/issues/new) 🤗
 
 # Citation
@@ -166,8 +157,8 @@ You can use the following BibTeX entry for citation:
 
 # Acknowledgments
 
-Research supported with Cloud TPUs from Google's TensorFlow Research Cloud (TFRC).
-Thanks for providing access to the TFRC ❤️
+Research supported with Cloud TPUs from Google's [TPU Research Cloud](https://sites.research.google/trc/about/) (TRC).
+Thanks for providing access to the TRC ❤️
 
 Thanks to the generous support from the [Hugging Face](https://huggingface.co/) team,
 it is possible to download both cased and uncased models from their S3 storage 🤗
