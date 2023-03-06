@@ -9,8 +9,8 @@ Made with 🤗, 🥨 and ❤️ from Munich.
 
 # Changelog
 
-* 06.03.2023: Model is now located under `lang-uk` organization on the Model Hub.
-              New evaluation results using Flair library are added.
+* 06.03.2023: Model is now located under `lang-uk` organization on the Hugging Face
+              [model hub page](https://huggingface.co/lang-uk). New evaluation results using Flair library are added.
 * 11.11.2020: Add DOI/Zenodo information, including citation section.
 * 10.11.2020: Initial version and public release of Ukrainian ELECTRA model.
 
@@ -95,7 +95,7 @@ Results (Development set, best hyper-param config):
 | ------------------------------ | ----- | ----- | ----- | ----- | ----- | -------------- |
 | bert-base-multilingual-cased   | 90.55 | 89.89 | 90.16 | 90.84 | 90.81 | 90.45 ± 0.42
 | xlm-roberta-base               | 92.25 | 91.99 | 91.72 | 90.54 | 91.35 | 91.57 ± 0.67
-| Ukrainian ELECTRA (1M)         | 94.17 | 92.13 | 92.74 | 91.45 | 92.23 | 92.54 ± 1.02
+| Ukrainian ELECTRA (1M)         | 94.17 | 92.13 | 92.74 | 91.45 | 92.23 | **92.54** ± 1.02
 
 Results (Test set, best hyper-param config on Development set incl. development data):
 
