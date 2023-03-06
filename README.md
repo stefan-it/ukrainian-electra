@@ -68,6 +68,7 @@ Results (Development set, best hyper-param config):
 | ------------------------------ | ----- | ----- | ----- | ----- | ----- | -------------- |
 | bert-base-multilingual-cased   | 98.03 | 98.11 | 98.18 | 98.02 | 97.95 | 98.06 ± 0.09
 | xlm-roberta-base               | 98.57 | 98.47 | 98.49 | 98.40 | 98.43 | 98.47 ± 0.06
+| facebook/xlm-v-base            | 98.50 | 98.48 | 98.54 | 98.56 | 98.60 | 98.54 ± 0.05
 | Ukrainian ELECTRA (1M)         | 98.57 | 98.64 | 98.60 | 98.56 | 98.62 | **98.60** ± 0.03
 
 Results (Test set, best hyper-param config on Development set):
@@ -76,6 +77,7 @@ Results (Test set, best hyper-param config on Development set):
 | ------------------------------ | ----- | ----- | ----- | ----- | ----- | -------------- |
 | bert-base-multilingual-cased   | 97.90 | 97.89 | 97.98 | 97.84 | 97.94 | 97.91 ± 0.05
 | xlm-roberta-base               | 98.33 | 98.51 | 98.43 | 98.41 | 98.43 | 98.42 ± 0.06
+| facebook/xlm-v-base            | 98.39 | 98.37 | 98.47 | 98.15 | 98.44 | 98.36 ± 0.13
 | Ukrainian ELECTRA (1M)         | 98.63 | 98.55 | 98.53 | 98.50 | 98.59 | **98.56** ± 0.05
 
 ## NER
