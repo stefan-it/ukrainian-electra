@@ -105,6 +105,7 @@ Results (Test set, best hyper-param config on Development set incl. development 
 | ------------------------------ | ----- | ----- | ----- | ----- | ----- | -------------- |
 | bert-base-multilingual-cased   | 84.20 | 85.61 | 85.11 | 85.17 | 83.90 | 84.80 ± 0.72
 | xlm-roberta-base               | 87.85 | 87.39 | 87.31 | 88.15 | 86.19 | 87.38 ± 0.75
+| facebook/xlm-v-base            | 86.00 | 86.25 | 86.22 | 87.05 | 86.34 | 86.37 ± 0.4
 | Ukrainian ELECTRA (1M)         | 88.16 | 87.96 | 88.39 | 88.14 | 87.68 | **88.07** ± 0.26
 
 # Model usage
